@@ -1,7 +1,5 @@
-
 @extends('template.header')
 @section('isi')
-
 
 <body class="bg-gray-100 flex items-center justify-center h-screen bg-sky-950">
     <div class="bg-white p-8 rounded-md shadow-md w-full max-w-md">

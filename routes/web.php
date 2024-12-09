@@ -19,10 +19,16 @@ use App\Http\Controllers\signupController;
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::get('/sesi/login', function () {
+    return view('/sesi/login');
+});
+Route::get('/sesi/home', function () {
+    return view('/sesi/home');
+});
 
 
 Route::resource('/sesi/signup', signupController::class);
 
 Route::get('/sesi/login', [loginController::class, 'index']);
-Route::get('/sesi/login', [loginController::class, 'login']);
+Route::post('/sesi/login', [loginController::class, 'login']);
+
