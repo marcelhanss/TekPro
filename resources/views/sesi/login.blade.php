@@ -1,4 +1,3 @@
-
 @extends('template.header')
 @section('isi')
 <body class="bg-gray-100 flex items-center justify-center h-screen bg-sky-950">

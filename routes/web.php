@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\loginController;
 use App\Http\Controllers\signupController;
 
 
@@ -21,5 +22,7 @@ Route::get('/', function () {
 
 
 
-Route::resource('/sesi/signup', SignupController::class);
+Route::resource('/sesi/signup', signupController::class);
 
+Route::get('/sesi/login', [loginController::class, 'index']);
+Route::get('/sesi/login', [loginController::class, 'login']);
