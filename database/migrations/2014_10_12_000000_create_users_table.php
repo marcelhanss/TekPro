@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id()->unique();
             $table->string('username');
             $table->string('password');
+            $table->tinyInteger('isAdmin')->default(0);
         });
     }
 

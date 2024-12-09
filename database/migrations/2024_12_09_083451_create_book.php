@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('deskripsi')->nullable();
             $table->string('gambar')->nullable();
             $table->integer('jumlah_terjual')->default(0);
-            $table->string('link_pdf')->nullable();
+            $table->file_stre('link_pdf')->nullable();
         });
     }
 
