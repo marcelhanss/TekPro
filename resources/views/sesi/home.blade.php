@@ -19,7 +19,7 @@
                 <a href="/sesi/home" class="text-sky-950 hover:text-blue-500"><i class="bi-cart3 text-3xl"></i></a>
                 <a href="/"><button class="bg-sky-950 text-white px-4 py-2 rounded-md hover:bg-blue-600">Log Out</button></a>
                 <a href="/sesi/login" class="text-sky-950 hover:text-blue-500 "><i class="bi bi-clock-history text-3xl"></i></a>
-                <h1>Hi, {{ Auth::user()->username }}</h1>
+                <h1>Hi, {{ Auth::User()->username }}</h1>
             </div>
         </div>
     </nav>
