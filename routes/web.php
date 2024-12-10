@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\signupController;
 
@@ -25,6 +26,9 @@ Route::get('/sesi/login', function () {
 Route::get('/sesi/home', function () {
     return view('/sesi/home');
 });
+Route::get('/admin/adminpage', function () {
+    return view('/admin/adminpage');
+});
 
 
 Route::resource('/sesi/signup', signupController::class);
@@ -32,3 +36,4 @@ Route::resource('/sesi/signup', signupController::class);
 Route::get('/sesi/login', [loginController::class, 'index']);
 Route::post('/sesi/login', [loginController::class, 'login']);
 
+Route::get('/books', [BookController::class, 'index'])->name('books.index');

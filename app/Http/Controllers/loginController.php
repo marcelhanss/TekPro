@@ -16,8 +16,8 @@ class loginController extends Controller
             'username' => 'required',
             'password' => 'required',
         ],[
-            'username.required' => 'Email wajib diisi',
-            'password.required' => 'password wajib diisi',
+            'username.required' => 'Username wajib diisi',
+            'password.required' => 'Password wajib diisi',
         ]);
 
         $data = [
@@ -25,10 +25,23 @@ class loginController extends Controller
             'password' => $request->password,
         ];
 
-        if(Auth::attempt($data)){
-            return redirect('/sesi/home')->with('success', 'Berhasil login');
-        }else{
-            return redirect('/sesi/login')->with('gagal', 'Gagal login');
+        if (Auth::attempt($data)) {
+            // Mendapatkan user yang sudah login
+            $user = Auth::user();
+
+            // Cek apakah user adalah admin
+            if ($user->isAdmin == 1) {
+                // Jika isAdmin = 1, arahkan ke halaman admin
+                return redirect('/admin/adminpage');
+            } else {
+                // Jika bukan admin, arahkan ke halaman home
+                return redirect('/sesi/home');
+            }
+        } else {
+            // Jika login gagal, kembali ke halaman login
+            return redirect('/sesi/login');
         }
+
+        
     }
 }

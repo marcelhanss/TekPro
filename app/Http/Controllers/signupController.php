@@ -41,6 +41,7 @@ class signupController extends Controller
         $data = [
             'username' => $request->username,
             'password' => bcrypt($request->password),
+            'isAdmin' => $request->isAdmin,
         ];
         
         User::create($data);

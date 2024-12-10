@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id()->unique();
-            $table->string('username');
-            $table->string('password');
-            $table->tinyInteger('isAdmin')->default(0);
+        Schema::create('categories', function (Blueprint $table) {
+            $table->id('id_kategori')->unique();
+            $table->string('nama_kategori');
         });
     }
 
@@ -24,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('categories');
     }
 };
