@@ -58,13 +58,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($books as $book)
+                    {{-- @foreach ($books as $book)
                     <tr>
                         <td class="border px-4 py-2">{{ $book->judul }}</td>
                         <td class="border px-4 py-2">{{ $book->penulis }}</td>
                         <td class="border px-4 py-2">{{ number_format($book->harga, 2) }}</td>
                     </tr>
-                    @endforeach
+                    @endforeach --}}
                 </tbody>
             </table>
         </div>

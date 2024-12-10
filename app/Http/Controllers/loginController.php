@@ -11,7 +11,7 @@ class loginController extends Controller
         return view("sesi/login");
     }
 
-    public function login(Request $request){
+        public function login(Request $request){
         $request->validate([
             'username' => 'required',
             'password' => 'required',
