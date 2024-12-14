@@ -35,6 +35,7 @@ Route::resource('/sesi/signup', signupController::class);
 
 Route::get('/sesi/login', [loginController::class, 'index']);
 Route::post('/sesi/login', [loginController::class, 'login']);
+Route::get('/logout', [loginController::class, 'logout'])->name('logout');
 
 Route::get('/books', [BookController::class, 'index'])->name('books.index');
 
