@@ -1,4 +1,4 @@
-@extends('template.header')
+{{-- @extends('template.header')
 
 @section('isi')
 
@@ -52,4 +52,4 @@
             </form>
         </div>
     </body>
-@endsection
+@endsection --}}
