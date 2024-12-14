@@ -22,6 +22,7 @@
                 Login
             </button>
         </form>
+        <a href="/sesi/signup"><h2 class="flex justify-center mt-2">Belum punya akun ??? Daftar</h2></a>
     </div>
 </body>
 @endsection

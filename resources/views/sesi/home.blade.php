@@ -28,21 +28,27 @@
                 </ul>
 
                 <div class="flex items-center space-x-4">
+                    @if (Auth::user()->is_admin == 0)
                     <a href="{{ route('cart.index') }}" class="text-sky-950 hover:text-blue-500">
                         <i class="bi-cart3 text-3xl"></i>
                     </a>
+                    @endif
                     <!-- Menampilkan jumlah item di cart -->
                     @php
                         $cart = session()->get('cart', []);
                         $cartCount = array_sum(array_column($cart, 'quantity')); // Menghitung total item di cart
                     @endphp
-                    @if($cartCount > 0)
-                        <span class="absolute top-0 right-0 bg-red-600 text-white text-xs rounded-full px-2 py-1">{{ $cartCount }}</span>
+
+                    @if (Auth::user()->is_admin == 0)
+                        @if($cartCount > 0)
+                            <span class="absolute top-0 right-0 bg-red-600 text-white text-xs rounded-full px-2 py-1">{{ $cartCount }}</span>
+                        @endif
                     @endif
-                    <a href="{{ route('logout') }}"><button
-                            class="bg-sky-950 text-white px-4 py-2 rounded-md hover:bg-blue-600">Log Out</button></a>
-                    <a href="/sesi/login" class="text-sky-950 hover:text-blue-500"><i
-                            class="bi bi-clock-history text-3xl"></i></a>
+                    
+                    <a href="{{ route('logout') }}"><button class="bg-sky-950 text-white px-4 py-2 rounded-md hover:bg-blue-600">Log Out</button></a>
+                    @if (Auth::user()->is_admin == 0)
+                    <a href="/sesi/login" class="text-sky-950 hover:text-blue-500"><i class="bi bi-clock-history text-3xl"></i></a>
+                    @endif
                     <h1>Hi, {{ Auth::user()->username }}</h1>
                 </div>
             </div>
@@ -51,13 +57,7 @@
         <!-- Header Section -->
         <header class="mt-20 bg-sky-950 py-16">
             <div class="container mx-auto text-center">
-                <h1 class="text-4xl font-bold text-blue-600">
-                    @isset($category)
-                        Books in {{ $category->nama_kategori }} Category
-                    @else
-                        Discover Your Next Favorite Book
-                    @endisset
-                </h1>
+                <h1 class="text-4xl font-bold text-blue-600">Discover Your Next Favorite Book</h1>
                 <p class="text-white mt-4">Explore a wide range of books and order online with ease.</p>
 
                 <!-- Search Form -->
@@ -121,7 +121,6 @@
             </div>
         </footer>
 
-        <!-- Dropdown Toggle Script -->
         <script>
             document.getElementById('categoryButton').addEventListener('click', function() {
                 var dropdown = document.getElementById('categoryDropdown');

@@ -29,11 +29,7 @@ class loginController extends Controller
 
         if (Auth::attempt($data)) {
             $user = Auth::user();
-            if ($user->isAdmin == 1) {
-                return redirect('/sesi/home');
-            } else {
-                return redirect('/sesi/home');
-            }
+            return redirect('/sesi/home');
         } else {
             return redirect('/sesi/login');
         }

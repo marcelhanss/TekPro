@@ -15,10 +15,8 @@
     
             <!-- Right Side Icons and Button -->
             <div class="flex items-center space-x-4">
-                <a href="/sesi/login" class="text-sky-950 hover:text-blue-500"><i class="bi-cart3 text-3xl"></i></a>
                 <a href="/sesi/login"><button class="border-2 border-gray-300 text-black px-4 py-2 rounded-md hover:border-black">Log In</button></a>
                 <a href="/sesi/signup"><button class="bg-sky-950 text-white px-4 py-2 rounded-md hover:bg-blue-600">Sign Up</button></a>
-                <a href="/sesi/login" class="text-sky-950 hover:text-blue-500 "><i class="bi bi-clock-history text-3xl"></i></a>
             </div>
         </div>
     </nav>
@@ -35,6 +33,14 @@
         </div>
     </header>
 
+    <div class="container mx-auto mt-10 mb-10 grid grid-cols-4 gap-8">
+        @foreach ($books as $book)
+            <div class="bg-white p-4 rounded shadow-lg">
+                    <img src="{{ $book->gambar }}" alt="{{ $book->judul }}" class="w-full h-64 object-cover rounded">
+                    <h2 class="mt-4 text-xl font-bold text-center">{{ $book->judul }}</h2>
+            </div>
+        @endforeach
+    </div>
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-6">
         <div class="container mx-auto text-center">
