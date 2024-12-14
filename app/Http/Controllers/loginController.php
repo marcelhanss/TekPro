@@ -26,22 +26,20 @@ class loginController extends Controller
         ];
 
         if (Auth::attempt($data)) {
-            // Mendapatkan user yang sudah login
             $user = Auth::user();
-
-            // Cek apakah user adalah admin
             if ($user->isAdmin == 1) {
-                // Jika isAdmin = 1, arahkan ke halaman admin
                 return redirect('/admin/adminpage');
             } else {
-                // Jika bukan admin, arahkan ke halaman home
                 return redirect('/sesi/home');
             }
         } else {
-            // Jika login gagal, kembali ke halaman login
             return redirect('/sesi/login');
         }
 
-        
+    }
+
+    public function logout(){
+        Auth::logout();
+        return redirect('/');
     }
 }
