@@ -9,5 +9,7 @@ class Book extends Model
 {
     use HasFactory;
 
-    protected $table = 'book';
+    protected $table = 'book'; // Nama tabel di database
+    protected $primaryKey = 'id_buku'; // Nama kolom primary key
+    public $timestamps = false; // Jika tabel tidak menggunakan created_at dan updated_at
 }

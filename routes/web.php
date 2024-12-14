@@ -39,3 +39,5 @@ Route::post('/sesi/login', [loginController::class, 'login']);
 Route::get('/books', [BookController::class, 'index'])->name('books.index');
 
 Route::get('/sesi/home', [BookController::class, 'index']);
+
+Route::get('/book/{id}', [BookController::class, 'show'])->name('book.detail');
