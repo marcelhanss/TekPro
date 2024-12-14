@@ -61,3 +61,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
 });
+
+Route::get('/categories/{categoryId}', [BookController::class, 'showByCategory'])->name('books.byCategory');
+
+Route::get('/sesi/home', [BookController::class, 'index'])->name('books.index');

@@ -7,6 +7,7 @@
             <div class="bg-white p-8 rounded shadow-lg">
                 <h1 class="text-3xl font-bold">{{ $book->judul }}</h1>
                 <p class="mt-4 text-gray-600"><strong>Penulis:</strong> {{ $book->penulis }}</p>
+                <p class="mt-2 text-gray-600"><strong>Kategori:</strong> {{ $book->category->nama_kategori }}</p>
                 <p class="mt-2 text-gray-600"><strong>Harga:</strong> Rp {{ number_format($book->harga, 2, ',', '.') }}</p>
                 <p class="mt-2 text-gray-600"><strong>Stok:</strong> {{ $book->stok }}</p>
                 <p class="mt-2 text-gray-600"><strong>Deskripsi:</strong> {{ $book->deskripsi }}</p>

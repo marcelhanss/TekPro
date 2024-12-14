@@ -12,11 +12,25 @@ use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $books = Book::all(); // Ambil semua data dari tabel 'book'
-        return view('sesi.home', ['books' => $books]);
+        $categories = Category::all();
+
+        // Ambil parameter 'search' dari request
+        $search = $request->input('search');
+
+        // Query untuk buku, jika ada kata kunci pencarian
+        if ($search) {
+            $books = Book::where('judul', 'like', '%' . $search . '%')->get();
+        } else {
+            // Jika tidak ada pencarian, ambil semua buku
+            $books = Book::all();
+        }
+
+        return view('sesi.home', ['books' => $books, 'categories' => $categories]);
     }
+
+
 
     public function admin(): View
     {
@@ -77,5 +91,13 @@ class BookController extends Controller
         $book = Book::findOrFail($id);
         $book->delete();
         return redirect()->route('books.index')->with('success', 'Book deleted successfully');
+    }
+
+    public function showByCategory($categoryId)
+    {
+        $categories = Category::all();
+        $category = Category::findOrFail($categoryId);
+        $books = Book::where('fk_id_kategori', $categoryId)->get();
+        return view('sesi.home', ['books' => $books, 'category' => $category, 'categories' => $categories]);
     }
 }
