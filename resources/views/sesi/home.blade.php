@@ -1,8 +1,8 @@
 @extends('template.header')
+
 @section('isi')
 
     <body class="bg-gray-100">
-        <!-- Navigation Bar -->
         <nav class="fixed top-0 left-0 w-full bg-white shadow-md z-50">
             <div class="container mx-auto px-4 py-3 flex justify-between items-center">
                 <!-- Logo -->
@@ -27,7 +27,6 @@
             </div>
         </nav>
 
-        <!-- Hero Section -->
         <header class="mt-20 bg-sky-950 py-16">
             <div class="container mx-auto text-center">
                 <h1 class="text-4xl font-bold text-blue-600">Discover Your Next Favorite Book</h1>
@@ -41,12 +40,39 @@
             </div>
         </header>
 
-        <!-- Footer -->
+        {{-- @if ($books->count() > 0)
+            <h1 class="text-center text-3xl mt-8">Featured Book: {{ $books->first()->judul }}</h1>
+        @else
+            <h1 class="text-center text-3xl mt-8">No Books Available</h1>
+        @endif --}}
+
+        <div class="container mx-auto mt-10 mb-10 grid grid-cols-4 gap-8">
+            @foreach ($books as $book)
+                <div class="bg-white p-4 rounded shadow-lg">
+                    <!-- Display the image and book title -->
+                    <img src="{{ $book->gambar }}" alt="{{ $book->judul }}" class="w-full h-64 object-cover rounded">
+                    <h2 class="mt-4 text-xl font-bold text-center">{{ $book->judul }}</h2>
+                </div>
+            @endforeach
+        </div>
+
+
         <footer class="bg-gray-800 text-white py-6">
             <div class="container mx-auto text-center">
                 <p>&copy; 2024 HanBook Store. All rights reserved.</p>
             </div>
         </footer>
-        </script>
+
+        {{-- @if ($books->isEmpty())
+            <p>No books available</p>
+        @else
+            <ol>
+                @foreach ($books as $book)
+                    <li>{{ $book->judul }}</li>
+                @endforeach
+            </ol>
+        @endif --}}
+
+
     </body>
 @endsection
