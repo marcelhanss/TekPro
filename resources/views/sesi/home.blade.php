@@ -62,6 +62,7 @@
                 </div>
             @endforeach
         </div>
+        </nav>
 
         @if (Auth::user()->is_admin == 1)
             <div class="container mx-auto mb-10">
