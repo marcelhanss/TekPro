@@ -40,12 +40,6 @@
             </div>
         </header>
 
-        {{-- @if ($books->count() > 0)
-            <h1 class="text-center text-3xl mt-8">Featured Book: {{ $books->first()->judul }}</h1>
-        @else
-            <h1 class="text-center text-3xl mt-8">No Books Available</h1>
-        @endif --}}
-
         <div class="container mx-auto mt-10 mb-10 grid grid-cols-4 gap-8">
             @foreach ($books as $book)
                 <div class="bg-white p-4 rounded shadow-lg">
@@ -53,9 +47,27 @@
                         <img src="{{ $book->gambar }}" alt="{{ $book->judul }}" class="w-full h-64 object-cover rounded">
                         <h2 class="mt-4 text-xl font-bold text-center">{{ $book->judul }}</h2>
                     </a>
+                    @if (Auth::user()->is_admin == 1)
+                        <div class="flex justify-center mt-2 space-x-2">
+                            <a href="{{ route('book.edit', $book->id_buku) }}"
+                                class="bg-yellow-500 text-white px-3 py-1 rounded">Edit</a>
+                            <form action="{{ route('book.delete', $book->id_buku) }}" method="POST"
+                                onsubmit="return confirm('Are you sure?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+                            </form>
+                        </div>
+                    @endif
                 </div>
             @endforeach
         </div>
+
+        @if (Auth::user()->is_admin == 1)
+            <div class="container mx-auto mb-10">
+                <a href="{{ route('admin.create') }}" class="bg-sky-950 text-white px-4 py-2 rounded">Tambah Buku</a>
+            </div>
+        @endif
 
 
         <footer class="bg-gray-800 text-white py-6">
