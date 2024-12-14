@@ -15,10 +15,8 @@
     
             <!-- Right Side Icons and Button -->
             <div class="flex items-center space-x-4">
-                <a href="/sesi/login" class="text-sky-950 hover:text-blue-500"><i class="bi-cart3 text-3xl"></i></a>
                 <a href="/sesi/login"><button class="border-2 border-gray-300 text-black px-4 py-2 rounded-md hover:border-black">Log In</button></a>
                 <a href="/sesi/signup"><button class="bg-sky-950 text-white px-4 py-2 rounded-md hover:bg-blue-600">Sign Up</button></a>
-                <a href="/sesi/login" class="text-sky-950 hover:text-blue-500 "><i class="bi bi-clock-history text-3xl"></i></a>
             </div>
         </div>
     </nav>
