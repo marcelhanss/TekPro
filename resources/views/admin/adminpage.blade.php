@@ -1,4 +1,4 @@
-@extends('template.header')
+{{-- @extends('template.header')
 
 @section('isi')
 
@@ -16,9 +16,7 @@
                 </ul>
 
                 <div class="flex items-center space-x-4">
-                    <a href="{{ route('logout') }}"><button
-                            class="bg-sky-950 text-white px-4 py-2 rounded-md hover:bg-blue-600">Log
-                            Out</button></a>
+                    <a href="{{ route('logout') }}"><button class="bg-sky-950 text-white px-4 py-2 rounded-md hover:bg-blue-600">Log Out</button></a>
                     <h1>Hi, {{ Auth::user()->username }}</h1>
                 </div>
             </div>
@@ -73,4 +71,4 @@
 
 
     </body>
-@endsection
+@endsection --}}
