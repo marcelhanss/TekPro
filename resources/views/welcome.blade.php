@@ -35,7 +35,14 @@
         </div>
     </header>
 
-
+    <div class="container mx-auto mt-10 mb-10 grid grid-cols-4 gap-8">
+        @foreach ($books as $book)
+            <div class="bg-white p-4 rounded shadow-lg">
+                    <img src="{{ $book->gambar }}" alt="{{ $book->judul }}" class="w-full h-64 object-cover rounded">
+                    <h2 class="mt-4 text-xl font-bold text-center">{{ $book->judul }}</h2>
+            </div>
+        @endforeach
+    </div>
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-6">
         <div class="container mx-auto text-center">

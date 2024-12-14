@@ -8,9 +8,9 @@ use App\Http\Controllers\loginController;
 use App\Http\Controllers\signupController;
 use App\Http\Controllers\CartController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 Route::get('/sesi/login', function () {
     return view('/sesi/login');
 });
@@ -30,7 +30,8 @@ Route::post('/sesi/login', [loginController::class, 'login']);
 Route::get('/logout', [loginController::class, 'logout'])->name('logout');
 
 
-Route::get('/books', [BookController::class, 'index'])->name('books.index');
+
+Route::get('/', [BookController::class, 'admin']);
 Route::get('/sesi/home', [BookController::class, 'index']);
 Route::get('/book/{id}', [BookController::class, 'show'])->name('book.detail');
 Route::get('/books', [BookController::class, 'index'])->name('books.index');

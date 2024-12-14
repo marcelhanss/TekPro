@@ -35,7 +35,7 @@ class BookController extends Controller
     public function admin(): View
     {
         $books = Book::all(); // Ambil semua data dari tabel 'book'
-        return view('admin.adminpage', ['books' => $books]);
+        return view('welcome', ['books' => $books]);
     }
 
     public function show($id)
