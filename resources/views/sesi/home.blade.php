@@ -7,7 +7,11 @@
             <div class="container mx-auto px-4 py-3 flex justify-between items-center">
                 <a href="/sesi/home" class="text-xl font-bold text-sky-950">HanBook Store</a>
                 <ul class="flex space-x-6 justify-center">
-                    <li><a href="/book/best-seller" class="text-sky-950 font-bold hover:text-blue-500">Best Sellers</a></li>
+
+                    
+                    <li><a href="/sesi/home" class="text-sky-950 font-bold hover:text-blue-500">Best Sellers</a></li>
+                    <!-- Dropdown untuk Categories -->
+
                     <li class="relative">
                         <button id="categoryButton" class="text-sky-950 font-bold hover:text-blue-500">
                             Categories
@@ -15,6 +19,7 @@
                         <ul id="categoryDropdown"
                             class="absolute left-0 hidden mt-2 space-y-2 bg-white text-sky-950 border border-gray-200 rounded-md">
                             <li><a href="/sesi/home" class="block px-4 py-2 hover:bg-gray-100">All</a></li>
+
                             @foreach ($categories as $category)
                                 <li>
                                     <a href="{{ route('books.byCategory', $category->id_kategori) }}"
@@ -23,6 +28,7 @@
                             @endforeach
                         </ul>
                     </li>
+
                 </ul>
 
                 <div class="flex items-center space-x-4">
@@ -47,10 +53,12 @@
                     @if (Auth::user()->is_admin == 0)
                     <a href="/sesi/login" class="text-sky-950 hover:text-blue-500"><i class="bi bi-clock-history text-3xl"></i></a>
                     @endif
+
                     <h1>Hi, {{ Auth::user()->username }}</h1>
                 </div>
             </div>
         </nav>
+
 
         <header class="mt-20 bg-sky-950 py-16">
             <div class="container mx-auto text-center">
@@ -109,6 +117,7 @@
             </div>
         @endif
 
+
         <footer class="bg-gray-800 text-white py-6">
             <div class="container mx-auto text-center">
                 <p>&copy; 2024 HanBook Store. All rights reserved.</p>
@@ -133,4 +142,6 @@
         </script>
 
     </body>
+
 @endsection
+

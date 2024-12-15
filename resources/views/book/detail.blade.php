@@ -14,6 +14,7 @@
                 <img src="{{ $book->gambar }}" alt="{{ $book->judul }}" class="w-full h-96 object-contain mt-4">
                 <a href="/sesi/home"
                     class="mt-4 inline-block bg-sky-950 text-white px-4 py-2 rounded-md hover:bg-blue-600">Kembali</a>
+
                 <!-- Di bagian bawah halaman detail buku -->
                 <form action="{{ route('cart.add', $book->id_buku) }}" method="POST">
                     @if ($book->stok == 0)
@@ -29,4 +30,6 @@
             </div>
         </div>
     </body>
+
 @endsection
+

@@ -34,12 +34,14 @@ Route::get('/logout', [loginController::class, 'logout'])->name('logout');
 Route::get('/', [BookController::class, 'admin']);
 Route::get('/sesi/home', [BookController::class, 'index']);
 Route::get('/book/{id}', [BookController::class, 'show'])->name('book.detail');
+
 Route::get('/books', [BookController::class, 'index'])->name('books.index');
 Route::get('/admin/create', [BookController::class, 'create'])->name('admin.create');
 Route::post('/book/store', [BookController::class, 'store'])->name('book.store');
 Route::get('/book/{id}/edit', [BookController::class, 'edit'])->name('book.edit');
 Route::put('/book/{id}', [BookController::class, 'update'])->name('book.update');
 Route::delete('/book/{id}', [BookController::class, 'destroy'])->name('book.delete');
+
 Route::get('/categories/{categoryId}', [BookController::class, 'showByCategory'])->name('books.byCategory');
 Route::get('/sesi/home', [BookController::class, 'index'])->name('books.index');
 // Route untuk menambah buku ke keranjang
@@ -64,5 +66,3 @@ Route::post('/cart/checkout', [CartController::class, 'processCheckout'])->name(
 // Route::middleware(['auth', 'admin'])->group(function () {
 //     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
 // });
-
-Route::get('/book/best-sellers', [BookController::class, 'bestSellers']);

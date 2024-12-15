@@ -29,22 +29,22 @@ class loginController extends Controller
         
         // Cek erro bila tidak sama
         if (Auth::attempt($data)) {
+
             return redirect('/sesi/home');
+
+            $user = Auth::user();
+            if ($user->isAdmin == 1) {
+                return redirect('/sesi/home');
+            } else {
+                return redirect('/sesi/home');
+            }
+
         } else {
             return back()->withErrors([
                 'username' => 'Username atau password salah',
             ]);
         }
 
-        
-
-
-        // if (Auth::attempt($data)) {
-        //     $user = Auth::user();
-        //     return redirect('/sesi/home');
-        // } else {
-        //     return redirect('/sesi/login');
-        // }
     }
 
     public function logout()
