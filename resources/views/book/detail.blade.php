@@ -18,7 +18,7 @@
                 <form action="{{ route('cart.add', $book->id_buku) }}" method="POST">
                     @csrf
                     @if (Auth::user()->is_admin == 0)
-                    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
+                    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 mt-2">
                         Add to Cart
                     </button>
                     @endif

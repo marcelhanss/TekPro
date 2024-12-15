@@ -3,17 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Category;
 use Illuminate\View\View;
 use App\Models\categories;
-use App\Models\Category;
-use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 
 
 class BookController extends Controller
 {
     public function index(Request $request): View
     {
+
         $categories = Category::all();
 
         // Ambil parameter 'search' dari request

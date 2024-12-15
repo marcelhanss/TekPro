@@ -8,12 +8,10 @@
                 <a href="/sesi/home" class="text-xl font-bold text-sky-950">HanBook Store</a>
                 <ul class="flex space-x-6 justify-center">
                     <li><a href="/sesi/home" class="text-sky-950 font-bold hover:text-blue-500">Best Sellers</a></li>
-                    <!-- Dropdown untuk Categories -->
                     <li class="relative">
                         <button id="categoryButton" class="text-sky-950 font-bold hover:text-blue-500">
                             Categories
                         </button>
-                        <!-- Dropdown Menu -->
                         <ul id="categoryDropdown"
                             class="absolute left-0 hidden mt-2 space-y-2 bg-white text-sky-950 border border-gray-200 rounded-md">
                             <li><a href="/sesi/home" class="block px-4 py-2 hover:bg-gray-100">All</a></li>
@@ -54,13 +52,11 @@
             </div>
         </nav>
 
-        <!-- Header Section -->
         <header class="mt-20 bg-sky-950 py-16">
             <div class="container mx-auto text-center">
                 <h1 class="text-4xl font-bold text-blue-600">Discover Your Next Favorite Book</h1>
                 <p class="text-white mt-4">Explore a wide range of books and order online with ease.</p>
 
-                <!-- Search Form -->
                 <form action="{{ route('books.index') }}" method="GET" class="mt-4">
                     <input type="text" id="search" name="search" class="w-1/2 p-3 border rounded-lg"
                         placeholder="Search for books..." value="{{ request()->input('search') }}">
@@ -69,7 +65,6 @@
                     </button>
                 </form>
 
-                <!-- Display No Books Found Message -->
                 @if (isset($search) && $books->isEmpty())
                     <p class="text-white mt-4">
                         No books found for your search: "{{ $search }}".
@@ -82,7 +77,6 @@
             </div>
         </header>
 
-        <!-- Books Section -->
         <div class="container mx-auto mt-10 mb-10 grid grid-cols-4 gap-8">
             @forelse ($books as $book)
                 <div class="bg-white p-4 rounded shadow-lg">
@@ -108,13 +102,13 @@
             @endforelse
         </div>
 
+
         @if (Auth::user()->is_admin == 1)
             <div class="container mx-auto mb-10">
                 <a href="{{ route('admin.create') }}" class="bg-sky-950 text-white px-4 py-2 rounded">Add New Book</a>
             </div>
         @endif
 
-        <!-- Footer Section -->
         <footer class="bg-gray-800 text-white py-6">
             <div class="container mx-auto text-center">
                 <p>&copy; 2024 HanBook Store. All rights reserved.</p>

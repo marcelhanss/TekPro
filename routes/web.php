@@ -11,15 +11,15 @@ use App\Http\Controllers\CartController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::get('/sesi/login', function () {
-    return view('/sesi/login');
-});
-Route::get('/sesi/home', function () {
-    return view('/sesi/home');
-});
-Route::get('/admin/adminpage', function () {
-    return view('/admin/adminpage');
-});
+// Route::get('/sesi/login', function () {
+//     return view('/sesi/login');
+// });
+// Route::get('/sesi/home', function () {
+//     return view('/sesi/home');
+// });
+// Route::get('/admin/adminpage', function () {
+//     return view('/admin/adminpage');
+// });
 
 
 Route::resource('/sesi/signup', signupController::class);

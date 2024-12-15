@@ -23,6 +23,10 @@
             </button>
         </form>
         <a href="/sesi/signup"><h2 class="flex justify-center mt-2">Belum punya akun ??? Daftar</h2></a>
+        <div class="text-center mt-2">
+            <a href="/"><button class="border-2 border-gray-300 text-black px-4 py-2 rounded-md hover:border-black">Kembali</button></a>
+        </div>
+
     </div>
 </body>
 @endsection

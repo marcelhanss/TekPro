@@ -26,13 +26,25 @@ class loginController extends Controller
             'username' => $request->username,
             'password' => $request->password,
         ];
-
+        
+        // Cek erro bila tidak sama
         if (Auth::attempt($data)) {
-            $user = Auth::user();
             return redirect('/sesi/home');
         } else {
-            return redirect('/sesi/login');
+            return back()->withErrors([
+                'username' => 'Username atau password salah',
+            ]);
         }
+
+        
+
+
+        // if (Auth::attempt($data)) {
+        //     $user = Auth::user();
+        //     return redirect('/sesi/home');
+        // } else {
+        //     return redirect('/sesi/login');
+        // }
     }
 
     public function logout()

@@ -11,6 +11,7 @@ class CartController extends Controller
 {
     public function updateQuantity(Request $request, $id)
     {
+        
         // Ambil data buku berdasarkan id
         $book = Book::findOrFail($id);
 

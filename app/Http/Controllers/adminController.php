@@ -15,6 +15,7 @@ class AdminController extends Controller
      */
     public function index()
     {
+        
         $bookCount = Book::count();
         $userCount = User::count();
         $categoryCount = Category::count();

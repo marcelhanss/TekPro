@@ -1,10 +1,9 @@
-<!-- Pastikan jQuery sudah dimuat di halaman Anda -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 @extends('template.header')
 
 @section('isi')
-    <div class="container mx-auto mt-10">
-        <h1 class="text-3xl font-bold mb-4">Your Cart</h1>
+    <div class="container mx-auto mt-10 rounded bg-sky-950">
+        <h1 class="text-3xl font-bold mb-4 text-center text-white ">Your Cart</h1>
 
         @if(session()->has('cart') && count(session()->get('cart')) > 0)
             <div class="bg-white p-8 rounded shadow-lg">
