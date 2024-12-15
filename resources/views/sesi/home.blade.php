@@ -7,15 +7,19 @@
             <div class="container mx-auto px-4 py-3 flex justify-between items-center">
                 <a href="/sesi/home" class="text-xl font-bold text-sky-950">HanBook Store</a>
                 <ul class="flex space-x-6 justify-center">
+
+                    
                     <li><a href="/sesi/home" class="text-sky-950 font-bold hover:text-blue-500">Best Sellers</a></li>
                     <!-- Dropdown untuk Categories -->
+
                     <li class="relative">
                         <button id="categoryButton" class="text-sky-950 font-bold hover:text-blue-500">
                             Categories
                         </button>
-                        <!-- Dropdown Menu -->
                         <ul id="categoryDropdown"
                             class="absolute left-0 hidden mt-2 space-y-2 bg-white text-sky-950 border border-gray-200 rounded-md">
+                            <li><a href="/sesi/home" class="block px-4 py-2 hover:bg-gray-100">All</a></li>
+
                             @foreach ($categories as $category)
                                 <li>
                                     <a href="{{ route('books.byCategory', $category->id_kategori) }}"
@@ -24,33 +28,43 @@
                             @endforeach
                         </ul>
                     </li>
-                    <li><a href="/sesi/home" class="text-sky-950 font-bold hover:text-blue-500">Order Online</a></li>
+
                 </ul>
 
                 <div class="flex items-center space-x-4">
-                    <a href="/sesi/home" class="text-sky-950 hover:text-blue-500"><i class="bi-cart3 text-3xl"></i></a>
-                    <a href="{{ route('logout') }}"><button
-                            class="bg-sky-950 text-white px-4 py-2 rounded-md hover:bg-blue-600">Log Out</button></a>
-                    <a href="/sesi/login" class="text-sky-950 hover:text-blue-500"><i
-                            class="bi bi-clock-history text-3xl"></i></a>
+                    @if (Auth::user()->is_admin == 0)
+                    <a href="{{ route('cart.index') }}" class="text-sky-950 hover:text-blue-500">
+                        <i class="bi-cart3 text-3xl"></i>
+                    </a>
+                    @endif
+                    <!-- Menampilkan jumlah item di cart -->
+                    @php
+                        $cart = session()->get('cart', []);
+                        $cartCount = array_sum(array_column($cart, 'quantity')); // Menghitung total item di cart
+                    @endphp
+
+                    @if (Auth::user()->is_admin == 0)
+                        @if($cartCount > 0)
+                            <span class="absolute top-0 right-0 bg-red-600 text-white text-xs rounded-full px-2 py-1">{{ $cartCount }}</span>
+                        @endif
+                    @endif
+                    
+                    <a href="{{ route('logout') }}"><button class="bg-sky-950 text-white px-4 py-2 rounded-md hover:bg-blue-600">Log Out</button></a>
+                    @if (Auth::user()->is_admin == 0)
+                    <a href="/sesi/login" class="text-sky-950 hover:text-blue-500"><i class="bi bi-clock-history text-3xl"></i></a>
+                    @endif
+
                     <h1>Hi, {{ Auth::user()->username }}</h1>
                 </div>
             </div>
         </nav>
 
-        <!-- Header Section -->
+
         <header class="mt-20 bg-sky-950 py-16">
             <div class="container mx-auto text-center">
-                <h1 class="text-4xl font-bold text-blue-600">
-                    @isset($category)
-                        Books in {{ $category->nama_kategori }} Category
-                    @else
-                        Discover Your Next Favorite Book
-                    @endisset
-                </h1>
+                <h1 class="text-4xl font-bold text-blue-600">Discover Your Next Favorite Book</h1>
                 <p class="text-white mt-4">Explore a wide range of books and order online with ease.</p>
 
-                <!-- Search Form -->
                 <form action="{{ route('books.index') }}" method="GET" class="mt-4">
                     <input type="text" id="search" name="search" class="w-1/2 p-3 border rounded-lg"
                         placeholder="Search for books..." value="{{ request()->input('search') }}">
@@ -59,7 +73,6 @@
                     </button>
                 </form>
 
-                <!-- Display No Books Found Message -->
                 @if (isset($search) && $books->isEmpty())
                     <p class="text-white mt-4">
                         No books found for your search: "{{ $search }}".
@@ -72,7 +85,6 @@
             </div>
         </header>
 
-        <!-- Books Section -->
         <div class="container mx-auto mt-10 mb-10 grid grid-cols-4 gap-8">
             @forelse ($books as $book)
                 <div class="bg-white p-4 rounded shadow-lg">
@@ -98,20 +110,20 @@
             @endforelse
         </div>
 
+
         @if (Auth::user()->is_admin == 1)
             <div class="container mx-auto mb-10">
                 <a href="{{ route('admin.create') }}" class="bg-sky-950 text-white px-4 py-2 rounded">Add New Book</a>
             </div>
         @endif
 
-        <!-- Footer Section -->
+
         <footer class="bg-gray-800 text-white py-6">
             <div class="container mx-auto text-center">
                 <p>&copy; 2024 HanBook Store. All rights reserved.</p>
             </div>
         </footer>
 
-        <!-- Dropdown Toggle Script -->
         <script>
             document.getElementById('categoryButton').addEventListener('click', function() {
                 var dropdown = document.getElementById('categoryDropdown');
@@ -130,4 +142,6 @@
         </script>
 
     </body>
+
 @endsection
+

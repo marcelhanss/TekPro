@@ -1,3 +1,4 @@
+
 @extends('template.header')
 
 @section('isi')
@@ -16,9 +17,13 @@
                 </ul>
 
                 <div class="flex items-center space-x-4">
+
+                    <a href="{{ route('logout') }}"><button class="bg-sky-950 text-white px-4 py-2 rounded-md hover:bg-blue-600">Log Out</button></a>
+
                     <a href="{{ route('logout') }}"><button
                             class="bg-sky-950 text-white px-4 py-2 rounded-md hover:bg-blue-600">Log
                             Out</button></a>
+
                     <h1>Hi, {{ Auth::user()->username }}</h1>
                 </div>
             </div>
@@ -37,11 +42,11 @@
             </div>
         </header>
 
-        {{-- @if ($books->count() > 0)
+        @if ($books->count() > 0)
             <h1 class="text-center text-3xl mt-8">Featured Book: {{ $books->first()->judul }}</h1>
         @else
             <h1 class="text-center text-3xl mt-8">No Books Available</h1>
-        @endif --}}
+        @endi
 
         <div class="container mx-auto mt-10 mb-10 grid grid-cols-4 gap-8">
             @foreach ($books as $book)
@@ -61,7 +66,7 @@
             </div>
         </footer>
 
-        {{-- @if ($books->isEmpty())
+        @if ($books->isEmpty())
             <p>No books available</p>
         @else
             <ol>
@@ -69,8 +74,11 @@
                     <li>{{ $book->judul }}</li>
                 @endforeach
             </ol>
-        @endif --}}
+        @endif 
 
 
     </body>
+
+
 @endsection
+

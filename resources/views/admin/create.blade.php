@@ -1,4 +1,6 @@
+
 @extends('template.header')
+
 
 @section('isi')
 
@@ -40,7 +42,6 @@
 
                 <!-- Dropdown untuk memilih kategori buku -->
                 <label for="kategori">Kategori</label>
-                {{-- <input type="number" name="kategori" required class="w-full p-2 border rounded mb-4">             --}}
                 <select name="fk_id_kategori" id="fk_id_kategori" required class="w-full p-2 border rounded mb-4">
                     @foreach ($categories as $category)
                         <option value="{{ $category->id_kategori }}">{{ $category->nama_kategori }}</option>
@@ -52,4 +53,6 @@
             </form>
         </div>
     </body>
+
 @endsection
+

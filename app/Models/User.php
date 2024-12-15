@@ -22,4 +22,4 @@ class User extends Authenticatable
     {
         return $this->attributes['isAdmin'] == 1;
     }
-}
+

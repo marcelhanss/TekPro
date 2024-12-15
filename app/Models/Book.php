@@ -21,12 +21,16 @@ class Book extends Model
         'stok',
         'deskripsi',
         'gambar',
+        'link_pdf',
+        'fk_id_kategori',
+        'jumlah_terjual',
         'link',
         'fk_id_kategori',
+
     ];
 
     public function category()
     {
         return $this->belongsTo(Category::class, 'fk_id_kategori', 'id_kategori');
     }
-}
+
