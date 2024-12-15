@@ -142,6 +142,7 @@ class BookController extends Controller
         if (empty($cart)) {
             return redirect()->route('books.index')->with('error', 'Keranjang Anda kosong');
         }
+        
 
         // Menampilkan halaman checkout dengan data cart
         return view('cart.checkout', compact('cart'));
@@ -158,11 +159,11 @@ class BookController extends Controller
     }
 
     public function bestSellers()
-    {
-        // Misalnya mengambil buku berdasarkan jumlah penjualan
-        $bestSellers = Book::orderBy('jumlah_terjual', 'desc')->take(5)->get();
-        $categories = Category::all(); // Untuk dropdown kategori
+{
+    // Misalnya mengambil buku berdasarkan jumlah penjualan
+    $bestSellers = Book::orderBy('jumlah_terjual', 'desc')->take(5)->get();
+    $categories = Category::all(); // Untuk dropdown kategori
 
-        return view('book.best-sellers', compact('best-sellers', 'categories'));
-    }
+    return view('/book/best-seller', compact('bestSellers', 'categories'));
+}
 }

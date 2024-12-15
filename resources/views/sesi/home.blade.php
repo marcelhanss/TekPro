@@ -9,7 +9,7 @@
                 <ul class="flex space-x-6 justify-center">
 
 
-                    <li><a href="/sesi/home" class="text-sky-950 font-bold hover:text-blue-500">Best Sellers</a></li>
+                    <li><a href="{{ route('books.bestSellers') }}" class="text-sky-950 font-bold hover:text-blue-500">Best Sellers</a></li>
                     <!-- Dropdown untuk Categories -->
 
                     <li class="relative">
@@ -38,17 +38,17 @@
                         </a>
                     @endif
                     <!-- Menampilkan jumlah item di cart -->
-                    @php
+                    {{-- @php
                         $cart = session()->get('cart', []);
                         $cartCount = array_sum(array_column($cart, 'quantity')); // Menghitung total item di cart
-                    @endphp
+                    @endphp --}}
 
-                    @if (Auth::user()->is_admin == 0)
+                    {{-- @if (Auth::user()->is_admin == 0)
                         @if ($cartCount > 0)
                             <span
                                 class="absolute top-0 right-0 bg-red-600 text-white text-xs rounded-full px-2 py-1">{{ $cartCount }}</span>
                         @endif
-                    @endif
+                    @endif --}}
 
                     <a href="{{ route('logout') }}"><button
                             class="bg-sky-950 text-white px-4 py-2 rounded-md hover:bg-blue-600">Log Out</button></a>

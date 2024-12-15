@@ -88,3 +88,6 @@ Route::post('cart/{bookId}', [CartController::class, 'addToCart'])->name('cart.a
 Route::put('cart/update/{id}', [CartController::class, 'updateQuantity'])->name('cart.updateQuantity');
 // Route::delete('cart/remove/{id}', [CartController::class, 'removeItem'])->name('cart.removeItem');
 Route::get('cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+
+
+Route::get('/books/best-sellers', [BookController::class, 'bestSellers'])->name('books.bestSellers');
