@@ -33,4 +33,4 @@ class Book extends Model
     {
         return $this->belongsTo(Category::class, 'fk_id_kategori', 'id_kategori');
     }
-
+}

@@ -16,4 +16,4 @@ class AdminMiddleware
 
         return redirect('/login')->withErrors(['error' => 'Unauthorized access.']);
     }
-
+}

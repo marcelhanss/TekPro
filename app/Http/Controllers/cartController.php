@@ -4,88 +4,180 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Book;
+use App\Models\Cart;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
+
+    public function store(Request $request)
+    {
+        // Validasi data
+        $validatedData = $request->validate([
+            'book_id' => 'required|integer|exists:books,id_buku',
+            'quantity' => 'required|integer|min:1',
+        ]);
+
+        // Ambil buku berdasarkan ID
+        $book = Book::find($validatedData['book_id']);
+
+        // Periksa apakah stok cukup
+        if ($book->stok < $validatedData['quantity']) {
+            return redirect()->back()->with('error', 'Stok tidak mencukupi');
+        }
+
+        // Simpan item ke tabel cart
+        Cart::create([
+            'user_id' => Auth::id(),
+            'book_id' => $book->id_buku,
+            'quantity' => $validatedData['quantity'],
+            'price' => $book->harga,
+        ]);
+
+        // Redirect ke halaman home dengan pesan sukses
+        return redirect()->route('home')->with('success', 'Item added to cart');
+    }
+
     public function updateQuantity(Request $request, $id)
     {
-        
-        // Ambil data buku berdasarkan id
-        $book = Book::findOrFail($id);
+        $book = Book::findOrFail($id); // Ambil data buku berdasarkan ID
+        $cart = session()->get('cart', []); // Ambil keranjang dari sesi
 
-        // Ambil keranjang dari session
-        $cart = session()->get('cart', []);
-
-        // Pastikan kuantitasnya tidak lebih dari stok
-        if ($request->action == 'increase' && $cart[$id]['quantity'] < $book->stok) {
-            $cart[$id]['quantity']++;
-        } elseif ($request->action == 'decrease' && $cart[$id]['quantity'] > 1) {
-            $cart[$id]['quantity']--;
+        // Periksa apakah item ada di keranjang
+        if (!isset($cart[$id])) {
+            return response()->json(['error' => 'Item tidak ditemukan di keranjang'], 404);
         }
 
-        // Simpan keranjang yang sudah diperbarui ke session
-        session()->put('cart', $cart);
-
-        // Hitung total harga keranjang
-        $total = 0;
-        foreach ($cart as $item) {
-            $total += $item['price'] * $item['quantity'];
+        // Perbarui kuantitas
+        if ($request->action == 'increase') {
+            if ($cart[$id]['quantity'] < $book->stok) {
+                $cart[$id]['quantity']++;
+            } else {
+                return response()->json(['error' => 'Stok tidak mencukupi'], 400);
+            }
+        } elseif ($request->action == 'decrease') {
+            if ($cart[$id]['quantity'] > 1) {
+                $cart[$id]['quantity']--;
+            }
         }
 
-        // Kembalikan response dalam bentuk JSON
+        session()->put('cart', $cart); // Simpan perubahan ke sesi
+
+        // Hitung total keranjang
+        $total = array_sum(array_map(fn($item) => $item['price'] * $item['quantity'], $cart));
+
         return response()->json([
             'quantity' => $cart[$id]['quantity'],
             'total' => number_format($cart[$id]['price'] * $cart[$id]['quantity'], 2, ',', '.'),
-            'totalCart' => number_format($total, 2, ',', '.')
+            'totalCart' => number_format($total, 2, ',', '.'),
         ]);
     }
+
 
     // Method untuk menghapus item dari keranjang
     public function removeItem($id)
     {
-        // Ambil keranjang dari session
-        $cart = session()->get('cart', []);
+        // Cari item keranjang berdasarkan id item keranjang
+        $cartItem = Cart::findOrFail($id);
 
-        // Jika item ada di keranjang, hapus itemnya
-        if (isset($cart[$id])) {
-            unset($cart[$id]);
-        }
+        // Hapus item dari tabel cart
+        $cartItem->delete();
 
-        // Simpan perubahan keranjang ke session
-        session()->put('cart', $cart);
-
-        // Kembali ke halaman keranjang
-        return back();
+        // Redirect kembali ke halaman keranjang dengan pesan sukses
+        return redirect()->route('cart.showCart')->with('success', 'Item berhasil dihapus dari keranjang.');
     }
+
+
+
+
 
     public function checkout()
     {
-        $cart = session()->get('cart', []);
+        $user = auth()->user(); // Ambil pengguna yang sedang login
+        $cartItems = Cart::with('book')->where('id', $user->id)->get(); // Ambil semua item keranjang pengguna beserta relasi buku
 
-        foreach ($cart as $id => $details) {
-            // Ambil data buku berdasarkan id
-            $book = Book::findOrFail($id);
-
-            // Cek apakah stok mencukupi
-            if ($book->stok >= $details['quantity']) {
-                // Kurangi stok
-                $book->stok -= $details['quantity'];
-                // Tambah jumlah terjual
-                $book->jumlah_terjual += $details['quantity'];
-                $book->save();
-            } else {
-                // Jika stok tidak mencukupi, tampilkan pesan error
-                return redirect()->route('cart.index')->with('error', 'Stok tidak cukup untuk buku ' . $book->judul);
-            }
+        // Periksa apakah keranjang kosong
+        if ($cartItems->isEmpty()) {
+            return redirect()->route('cart.showCart')->with('error', 'Keranjang Anda kosong.');
         }
 
-        // Bersihkan keranjang setelah checkout
-        session()->forget('cart');
+        // Proses setiap item di keranjang
+        foreach ($cartItems as $cartItem) {
+            $book = $cartItem->book; // Ambil data buku terkait
 
-        return redirect()->route('books.index')->with('success', 'Checkout berhasil!');
+            // Periksa apakah stok cukup untuk item
+            if ($book->stok < $cartItem->quantity) {
+                return redirect()->route('cart.showCart')->with('error', 'Stok tidak cukup untuk buku "' . $book->judul . '"');
+            }
+
+            // Kurangi stok buku
+            $book->stok -= $cartItem->quantity;
+            // Tambah jumlah terjual buku
+            $book->jumlah_terjual += $cartItem->quantity;
+            // Simpan perubahan pada buku
+            $book->save();
+
+            // Hapus item dari tabel keranjang
+            $cartItem->delete();
+        }
+
+        // Setelah semua item di proses, redirect ke halaman books dengan pesan sukses
+        return redirect()->route('books.index')->with('success', 'Checkout berhasil! Stok dan jumlah terjual buku telah diperbarui.');
+    }
+
+
+
+
+    public function addToCart(Request $request, $bookId)
+    {
+        $user = auth()->user(); // Ambil pengguna yang sedang login
+        $book = Book::findOrFail($bookId); // Ambil data buku berdasarkan ID
+
+        // Validasi stok barang
+        $quantity = $request->input('quantity', 1); // Default kuantitas = 1
+        if ($quantity > $book->stok) {
+            return redirect()->back()->with('error', 'Stok tidak mencukupi.');
+        }
+
+        // Periksa apakah buku sudah ada dalam keranjang
+        $cartItem = Cart::where('id', $user->id)
+            ->where('id_buku', $bookId)
+            ->first();
+
+        if ($cartItem) {
+            // Jika buku sudah ada, tambahkan kuantitas
+            $cartItem->quantity += $quantity;
+
+            // Pastikan kuantitas tidak melebihi stok
+            if ($cartItem->quantity > $book->stok) {
+                return redirect()->back()->with('error', 'Stok tidak mencukupi.');
+            }
+
+            $cartItem->save();
+        } else {
+            // Jika buku belum ada di keranjang, buat entri baru
+            Cart::create([
+                'id' => $user->id, // User yang sedang login
+                'id_buku' => $bookId,    // ID buku
+                'quantity' => $quantity, // Kuantitas
+            ]);
+        }
+
+        // Kembali ke halaman keranjang dengan pesan sukses
+        return redirect()->route('cart.showCart')->with('success', 'Item berhasil ditambahkan ke keranjang.');
+    }
+
+
+
+
+
+    public function showCart()
+    {
+        $user = auth()->user(); // Ambil pengguna yang sedang login
+        $cartItems = Cart::with('book')->where('id', $user->id)->get(); // Ambil data keranjang pengguna beserta relasi buku
+
+        return view('cart.index', compact('cartItems')); // Tampilkan ke view
     }
 }
-
-?>

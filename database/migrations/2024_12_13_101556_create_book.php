@@ -11,8 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('books', function (Blueprint $table) {
-
+        Schema::create('book', function (Blueprint $table) {
             $table->id('id_buku'); // ID Buku
             $table->foreignId('fk_id_kategori')->constrained('categories', 'id_kategori')->onDelete('cascade'); // Kategori Buku
             $table->string('judul'); // Judul Buku
@@ -23,17 +22,6 @@ return new class extends Migration
             $table->string('gambar')->nullable(); // Gambar Buku (opsional)
             $table->integer('jumlah_terjual')->default(0); // Jumlah Terjual (default 0)
             $table->string('link_pdf')->nullable(); // Link PDF Buku (opsional)
-            $table->id('id_buku');
-            $table->foreignId('fk_id_kategori')->constrained('categories', 'id_kategori')->onDelete('cascade');
-            $table->string('judul');
-            $table->string('penulis');
-            $table->decimal('harga', 10, 2);
-            $table->integer('stok');
-            $table->text('deskripsi')->nullable();
-            $table->string('gambar')->nullable();
-            $table->integer('jumlah_terjual')->default(0);
-            $table->string('link_pdf')->nullable();
-
         });
     }
 
@@ -42,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('books');
+        Schema::dropIfExists('book');
     }
 };

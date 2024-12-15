@@ -17,19 +17,16 @@
 
                 <!-- Di bagian bawah halaman detail buku -->
                 <form action="{{ route('cart.add', $book->id_buku) }}" method="POST">
-                    @if ($book->stok == 0)
-                        <span class="text-red-500">Stok Habis</span>
-                    @endif
                     @csrf
-                    @if (Auth::user()->is_admin == 0 && $book->stok > 0)
+                    <input type="hidden" name="book_id" value="{{ $book->id_buku }}">
+                    <input type="number" name="quantity" value="1" min="1" max="{{ $book->stok }}"
+                        class="w-16 text-center border border-gray-300 rounded-lg" required>
                     <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 mt-2">
                         Add to Cart
                     </button>
-                    @endif
                 </form>
+
             </div>
         </div>
     </body>
-
 @endsection
-

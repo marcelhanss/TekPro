@@ -8,7 +8,7 @@
                 <a href="/sesi/home" class="text-xl font-bold text-sky-950">HanBook Store</a>
                 <ul class="flex space-x-6 justify-center">
 
-                    
+
                     <li><a href="/sesi/home" class="text-sky-950 font-bold hover:text-blue-500">Best Sellers</a></li>
                     <!-- Dropdown untuk Categories -->
 
@@ -33,9 +33,9 @@
 
                 <div class="flex items-center space-x-4">
                     @if (Auth::user()->is_admin == 0)
-                    <a href="{{ route('cart.index') }}" class="text-sky-950 hover:text-blue-500">
-                        <i class="bi-cart3 text-3xl"></i>
-                    </a>
+                        <a href="{{ route('cart.showCart') }}" class="text-sky-950 hover:text-blue-500">
+                            <i class="bi-cart3 text-3xl"></i>
+                        </a>
                     @endif
                     <!-- Menampilkan jumlah item di cart -->
                     @php
@@ -44,14 +44,17 @@
                     @endphp
 
                     @if (Auth::user()->is_admin == 0)
-                        @if($cartCount > 0)
-                            <span class="absolute top-0 right-0 bg-red-600 text-white text-xs rounded-full px-2 py-1">{{ $cartCount }}</span>
+                        @if ($cartCount > 0)
+                            <span
+                                class="absolute top-0 right-0 bg-red-600 text-white text-xs rounded-full px-2 py-1">{{ $cartCount }}</span>
                         @endif
                     @endif
-                    
-                    <a href="{{ route('logout') }}"><button class="bg-sky-950 text-white px-4 py-2 rounded-md hover:bg-blue-600">Log Out</button></a>
+
+                    <a href="{{ route('logout') }}"><button
+                            class="bg-sky-950 text-white px-4 py-2 rounded-md hover:bg-blue-600">Log Out</button></a>
                     @if (Auth::user()->is_admin == 0)
-                    <a href="/sesi/login" class="text-sky-950 hover:text-blue-500"><i class="bi bi-clock-history text-3xl"></i></a>
+                        <a href="/sesi/login" class="text-sky-950 hover:text-blue-500"><i
+                                class="bi bi-clock-history text-3xl"></i></a>
                     @endif
 
                     <h1>Hi, {{ Auth::user()->username }}</h1>
@@ -144,4 +147,3 @@
     </body>
 
 @endsection
-

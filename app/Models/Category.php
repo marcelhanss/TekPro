@@ -20,4 +20,4 @@ class Category extends Model
     {
         return $this->hasMany(Book::class, 'fk_id_kategori', 'id_kategori');
     }
-
+}

@@ -57,7 +57,7 @@ Route::get('/cart/checkout', [BookController::class, 'checkout'])->name('cart.ch
 // Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::put('/cart/update-quantity/{id}', [CartController::class, 'updateQuantity'])->name('cart.updateQuantity');
-Route::delete('/cart/remove-item/{id}', [CartController::class, 'removeItem'])->name('cart.removeItem');
+// Route::delete('/cart/remove-item/{id}', [CartController::class, 'removeItem'])->name('cart.removeItem');
 
 
 Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
@@ -66,3 +66,25 @@ Route::post('/cart/checkout', [CartController::class, 'processCheckout'])->name(
 // Route::middleware(['auth', 'admin'])->group(function () {
 //     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
 // });
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('cart', [CartController::class, 'showCart'])->name('cart.showCart');
+    Route::post('cart/{bookId}', [CartController::class, 'addToCart'])->name('cart.addToCart');
+    Route::put('cart/update/{id}', [CartController::class, 'updateQuantity'])->name('cart.updateQuantity');
+    // Route::delete('cart/remove/{id}', [CartController::class, 'removeItem'])->name('cart.removeItem');
+    Route::get('cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+    Route::post('/cart/store', [CartController::class, 'store'])->name('cart.store');
+    Route::post('/cart/{bookId}/add', [CartController::class, 'addToCart'])->name('cart.add');
+});
+
+Route::delete('/cart/{id}', [CartController::class, 'removeItem'])->name('cart.removeItem');
+
+// Route::put('/cart/update-quantity/{id}', [CartController::class, 'updateQuantity'])->name('cart.updateQuantity');
+// Route::delete('/cart/remove-item/{id}', [CartController::class, 'removeItem'])->name('cart.removeItem');
+// Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+
+
+Route::post('cart/{bookId}', [CartController::class, 'addToCart'])->name('cart.addToCart');
+Route::put('cart/update/{id}', [CartController::class, 'updateQuantity'])->name('cart.updateQuantity');
+// Route::delete('cart/remove/{id}', [CartController::class, 'removeItem'])->name('cart.removeItem');
+Route::get('cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
