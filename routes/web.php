@@ -17,8 +17,8 @@ use App\Http\Controllers\CartController;
 // Route::get('/sesi/home', function () {
 //     return view('/sesi/home');
 // });
-// Route::get('/admin/adminpage', function () {
-//     return view('/admin/adminpage');
+// Route::get('/book/best-seller', function () {
+//     return view('/book/best-seller');
 // });
 
 
@@ -58,6 +58,11 @@ Route::put('/cart/update-quantity/{id}', [CartController::class, 'updateQuantity
 Route::delete('/cart/remove-item/{id}', [CartController::class, 'removeItem'])->name('cart.removeItem');
 
 
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
-});
+Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+Route::post('/cart/checkout', [CartController::class, 'processCheckout'])->name('cart.processCheckout');
+
+// Route::middleware(['auth', 'admin'])->group(function () {
+//     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+// });
+
+Route::get('/book/best-sellers', [BookController::class, 'bestSellers']);

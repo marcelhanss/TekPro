@@ -59,6 +59,33 @@ class CartController extends Controller
         // Kembali ke halaman keranjang
         return back();
     }
+
+    public function checkout()
+    {
+        $cart = session()->get('cart', []);
+
+        foreach ($cart as $id => $details) {
+            // Ambil data buku berdasarkan id
+            $book = Book::findOrFail($id);
+
+            // Cek apakah stok mencukupi
+            if ($book->stok >= $details['quantity']) {
+                // Kurangi stok
+                $book->stok -= $details['quantity'];
+                // Tambah jumlah terjual
+                $book->jumlah_terjual += $details['quantity'];
+                $book->save();
+            } else {
+                // Jika stok tidak mencukupi, tampilkan pesan error
+                return redirect()->route('cart.index')->with('error', 'Stok tidak cukup untuk buku ' . $book->judul);
+            }
+        }
+
+        // Bersihkan keranjang setelah checkout
+        session()->forget('cart');
+
+        return redirect()->route('books.index')->with('success', 'Checkout berhasil!');
+    }
 }
 
 ?>

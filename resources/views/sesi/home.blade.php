@@ -7,7 +7,7 @@
             <div class="container mx-auto px-4 py-3 flex justify-between items-center">
                 <a href="/sesi/home" class="text-xl font-bold text-sky-950">HanBook Store</a>
                 <ul class="flex space-x-6 justify-center">
-                    <li><a href="/sesi/home" class="text-sky-950 font-bold hover:text-blue-500">Best Sellers</a></li>
+                    <li><a href="/book/best-seller" class="text-sky-950 font-bold hover:text-blue-500">Best Sellers</a></li>
                     <li class="relative">
                         <button id="categoryButton" class="text-sky-950 font-bold hover:text-blue-500">
                             Categories

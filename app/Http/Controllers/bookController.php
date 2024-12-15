@@ -3,19 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
-use App\Models\Category;
 use Illuminate\View\View;
 use App\Models\categories;
-use Illuminate\Http\Request;
+use App\Models\Category;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 
 class BookController extends Controller
 {
     public function index(Request $request): View
     {
-
         $categories = Category::all();
 
         // Ambil parameter 'search' dari request
@@ -125,6 +123,7 @@ class BookController extends Controller
     return redirect()->route('books.index');
 }
 
+
 public function showCart()
 {
     // Ambil keranjang dari session
@@ -158,4 +157,12 @@ public function checkout()
         return view('sesi.home', ['books' => $books, 'category' => $category, 'categories' => $categories]);
     }
 
+    public function bestSellers()
+{
+    // Misalnya mengambil buku berdasarkan jumlah penjualan
+    $bestSellers = Book::orderBy('jumlah_terjual', 'desc')->take(5)->get();
+    $categories = Category::all(); // Untuk dropdown kategori
+
+    return view('book.best-sellers', compact('best-sellers', 'categories'));
+}
 }

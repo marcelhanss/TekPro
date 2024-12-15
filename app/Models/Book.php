@@ -21,8 +21,9 @@ class Book extends Model
         'stok',
         'deskripsi',
         'gambar',
-        'link',
+        'link_pdf',
         'fk_id_kategori',
+        'jumlah_terjual',
     ];
 
     public function category()
