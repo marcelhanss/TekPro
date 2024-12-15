@@ -37,9 +37,8 @@ class BookController extends Controller
         $books = Book::all(); // Ambil semua data dari tabel 'book'
 
         return view('welcome', ['books' => $books]);
-=======
-        return view('admin.adminpage', ['books' => $books]);
 
+        return view('admin.adminpage', ['books' => $books]);
     }
 
     public function show($id)
@@ -52,11 +51,10 @@ class BookController extends Controller
 
     {
         $categories = Category::all();
-        return view('book.form', compact('categories'));
-
-    {
-        $categories = Category::all();
-        return view('book.form', compact('categories'));
+        return view('book.form', compact('categories')); {
+            $categories = Category::all();
+            return view('book.form', compact('categories'));
+        }
     }
 
     public function store(Request $request)
@@ -152,60 +150,60 @@ class BookController extends Controller
         $book->delete();
         return redirect()->route('books.index')->with('success', 'Book deleted successfully');
     }
-    
+
 
     public function addToCart($id)
-{
-    // Ambil buku berdasarkan ID
-    $book = Book::findOrFail($id);
+    {
+        // Ambil buku berdasarkan ID
+        $book = Book::findOrFail($id);
 
-    // Ambil keranjang dari session, jika ada
-    $cart = session()->get('cart', []);
+        // Ambil keranjang dari session, jika ada
+        $cart = session()->get('cart', []);
 
-    // Cek apakah buku sudah ada di keranjang
-    if (isset($cart[$id])) {
-        // Jika sudah, tambahkan jumlahnya
-        $cart[$id]['quantity']++;
-    } else {
-        // Jika belum, tambahkan buku ke keranjang
-        $cart[$id] = [
-            "name" => $book->judul,
-            "price" => $book->harga,
-            "quantity" => 1,
-            "image" => $book->gambar
-        ];
+        // Cek apakah buku sudah ada di keranjang
+        if (isset($cart[$id])) {
+            // Jika sudah, tambahkan jumlahnya
+            $cart[$id]['quantity']++;
+        } else {
+            // Jika belum, tambahkan buku ke keranjang
+            $cart[$id] = [
+                "name" => $book->judul,
+                "price" => $book->harga,
+                "quantity" => 1,
+                "image" => $book->gambar
+            ];
+        }
+
+        // Simpan keranjang ke session
+        session()->put('cart', $cart);
+
+        // Redirect ke halaman home setelah menambah buku ke keranjang
+        return redirect()->route('books.index');
     }
 
-    // Simpan keranjang ke session
-    session()->put('cart', $cart);
 
-    // Redirect ke halaman home setelah menambah buku ke keranjang
-    return redirect()->route('books.index');
-}
+    public function showCart()
+    {
+        // Ambil keranjang dari session
+        $cart = session()->get('cart', []);
 
-
-public function showCart()
-{
-    // Ambil keranjang dari session
-    $cart = session()->get('cart', []);
-
-    // Mengembalikan tampilan keranjang dengan data cart
-    return view('cart.index', compact('cart'));
-}
-
-public function checkout()
-{
-    // Ambil keranjang dari session
-    $cart = session()->get('cart', []);
-
-    // Jika keranjang kosong, arahkan kembali ke halaman utama
-    if (empty($cart)) {
-        return redirect()->route('books.index')->with('error', 'Keranjang Anda kosong');
+        // Mengembalikan tampilan keranjang dengan data cart
+        return view('cart.index', compact('cart'));
     }
 
-    // Menampilkan halaman checkout dengan data cart
-    return view('cart.checkout', compact('cart'));
-}
+    public function checkout()
+    {
+        // Ambil keranjang dari session
+        $cart = session()->get('cart', []);
+
+        // Jika keranjang kosong, arahkan kembali ke halaman utama
+        if (empty($cart)) {
+            return redirect()->route('books.index')->with('error', 'Keranjang Anda kosong');
+        }
+
+        // Menampilkan halaman checkout dengan data cart
+        return view('cart.checkout', compact('cart'));
+    }
 
 
 
@@ -218,11 +216,11 @@ public function checkout()
     }
 
     public function bestSellers()
-{
-    // Misalnya mengambil buku berdasarkan jumlah penjualan
-    $bestSellers = Book::orderBy('jumlah_terjual', 'desc')->take(5)->get();
-    $categories = Category::all(); // Untuk dropdown kategori
+    {
+        // Misalnya mengambil buku berdasarkan jumlah penjualan
+        $bestSellers = Book::orderBy('jumlah_terjual', 'desc')->take(5)->get();
+        $categories = Category::all(); // Untuk dropdown kategori
 
-    return view('book.best-sellers', compact('best-sellers', 'categories'));
-}
+        return view('book.best-sellers', compact('best-sellers', 'categories'));
+    }
 }

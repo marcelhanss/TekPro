@@ -29,4 +29,4 @@ class Kernel extends ConsoleKernel
         // Middleware lainnya...
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
     ];
-
+}
