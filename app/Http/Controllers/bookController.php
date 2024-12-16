@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\History;
+use App\Models\Category;
 use Illuminate\View\View;
 use App\Models\categories;
-use App\Models\Category;
-use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 
 class BookController extends Controller
@@ -39,10 +40,16 @@ class BookController extends Controller
     }
 
     public function show($id)
-    {
-        $book = Book::findOrFail($id); // Cari buku berdasarkan ID
-        return view('book.detail', compact('book')); // Tampilkan view detail
-    }
+{
+    // Simpan URL asal ke dalam sesi, jika berasal dari book.index atau book.bestSeller
+    session(['previous_url' => url()->previous()]);
+
+    // Ambil buku berdasarkan ID
+    $book = Book::findOrFail($id);
+
+    // Tampilkan halaman detail buku
+    return view('book.detail', compact('book'));
+}
 
     public function create()
     {
@@ -133,21 +140,49 @@ class BookController extends Controller
         return view('cart.index', compact('cart'));
     }
 
-    public function checkout()
-    {
-        // Ambil keranjang dari session
-        $cart = session()->get('cart', []);
+    // public function checkout()
+    // {
+    //     // Ambil keranjang dari session
+    //     $cart = session()->get('cart', []);
 
-        // Jika keranjang kosong, arahkan kembali ke halaman utama
-        if (empty($cart)) {
-            return redirect()->route('books.index')->with('error', 'Keranjang Anda kosong');
-        }
-        
+    //     // Jika keranjang kosong, arahkan kembali ke halaman utama
+    //     if (empty($cart)) {
+    //         return redirect()->route('books.index')->with('error', 'Keranjang Anda kosong');
+    //     }
 
-        // Menampilkan halaman checkout dengan data cart
-        return view('cart.checkout', compact('cart'));
-    }
 
+    //     // Menampilkan halaman checkout dengan data cart
+    //     return view('cart.checkout', compact('cart'));
+    // }
+
+    // public function checkout(Request $request)
+    // {
+    //     // Ambil data keranjang dari session
+    //     $cart = session()->get('cart', []);
+    
+    //     // Jika keranjang kosong, beri pesan error
+    //     if (empty($cart)) {
+    //         return redirect()->route('books.index')->with('error', 'Keranjang Anda kosong.');
+    //     }
+    
+    //     // Iterasi semua buku dalam keranjang
+    //     foreach ($cart as $id => $item) {
+    //         $book = Book::findOrFail($id); // Cari buku berdasarkan ID
+    
+    //         // Simpan buku ke tabel history
+    //         History::create([
+    //             'fk_user_id' => Auth::id(),  // ID pengguna yang sedang login
+    //             'fk_book_id' => $book->id_buku, // ID buku
+    //             'link_pdf' => $book->link_pdf, // Ambil langsung link PDF dari tabel buku
+    //         ]);
+    //     }
+    
+    //     // Kosongkan keranjang setelah checkout
+    //     session()->forget('cart4');
+    
+    //     // Redirect ke halaman utama dengan pesan sukses
+    //     return redirect()->route('books.index')->with('success', 'Buku berhasil ditambahkan ke history. Anda dapat membaca buku melalui tautan di halaman history.');
+    // }
 
 
     public function showByCategory($categoryId)

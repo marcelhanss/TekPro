@@ -31,12 +31,21 @@
                 @endforeach
 
                 <div class="mt-6 text-right">
-                    <a href="{{ route('cart.checkout') }}"
+                    <form action="{{ route('cart.checkout') }}" method="POST">
+                        @csrf
+                        <button type="submit">
+                            <h1 class="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 transition duration-200">
+                                Checkout
+                            </h1>
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="">
+                    {{-- <a href="{{ route('cart.checkout') }}"
                         class="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 transition duration-200">
                         Checkout
-                    </a>
-                </div>
-
+                    </a>  --}}
                 <a href="/sesi/home"
                     class="mt-4 inline-block bg-sky-950 text-white px-6 py-3 rounded-md hover:bg-blue-600 transition duration-200">Kembali</a>
             </div>

@@ -35,6 +35,7 @@ Route::get('/', [BookController::class, 'admin']);
 Route::get('/sesi/home', [BookController::class, 'index']);
 Route::get('/book/{id}', [BookController::class, 'show'])->name('book.detail');
 
+
 Route::get('/books', [BookController::class, 'index'])->name('books.index');
 Route::get('/admin/create', [BookController::class, 'create'])->name('admin.create');
 Route::post('/book/store', [BookController::class, 'store'])->name('book.store');
@@ -49,7 +50,7 @@ Route::post('/cart/add/{id}', [BookController::class, 'addToCart'])->name('cart.
 // Route untuk menampilkan keranjang
 Route::get('/cart', [BookController::class, 'showCart'])->name('cart.index');
 // Route untuk checkout
-Route::get('/cart/checkout', [BookController::class, 'checkout'])->name('cart.checkout');
+// Route::get('/cart/checkout', [BookController::class, 'checkout'])->name('cart.checkout');
 
 
 // Route::get('/login', [AuthController::class, 'loginForm'])->name('login');
@@ -60,7 +61,7 @@ Route::put('/cart/update-quantity/{id}', [CartController::class, 'updateQuantity
 // Route::delete('/cart/remove-item/{id}', [CartController::class, 'removeItem'])->name('cart.removeItem');
 
 
-Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+// Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 Route::post('/cart/checkout', [CartController::class, 'processCheckout'])->name('cart.processCheckout');
 
 // Route::middleware(['auth', 'admin'])->group(function () {
@@ -72,7 +73,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('cart/{bookId}', [CartController::class, 'addToCart'])->name('cart.addToCart');
     Route::put('cart/update/{id}', [CartController::class, 'updateQuantity'])->name('cart.updateQuantity');
     // Route::delete('cart/remove/{id}', [CartController::class, 'removeItem'])->name('cart.removeItem');
-    Route::get('cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+    // Route::get('cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
     Route::post('/cart/store', [CartController::class, 'store'])->name('cart.store');
     Route::post('/cart/{bookId}/add', [CartController::class, 'addToCart'])->name('cart.add');
 });
@@ -87,7 +88,13 @@ Route::delete('/cart/{id}', [CartController::class, 'removeItem'])->name('cart.r
 Route::post('cart/{bookId}', [CartController::class, 'addToCart'])->name('cart.addToCart');
 Route::put('cart/update/{id}', [CartController::class, 'updateQuantity'])->name('cart.updateQuantity');
 // Route::delete('cart/remove/{id}', [CartController::class, 'removeItem'])->name('cart.removeItem');
-Route::get('cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+Route::post('cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 
 
 Route::get('/books/best-sellers', [BookController::class, 'bestSellers'])->name('books.bestSellers');
+
+
+Route::middleware(['auth'])->group(function () { 
+    // Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+    Route::get('/history', [CartController::class, 'showHistory'])->name('history.index');
+});
