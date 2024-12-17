@@ -94,7 +94,7 @@ Route::post('cart/checkout', [CartController::class, 'checkout'])->name('cart.ch
 Route::get('/books/best-sellers', [BookController::class, 'bestSellers'])->name('books.bestSellers');
 
 
-Route::middleware(['auth'])->group(function () { 
+Route::middleware(['auth'])->group(function () {
     // Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
     Route::get('/history', [CartController::class, 'showHistory'])->name('history.index');
 });
