@@ -24,8 +24,6 @@ class Book extends Model
         'link_pdf',
         'fk_id_kategori',
         'jumlah_terjual',
-        'link',
-        'fk_id_kategori',
 
     ];
 

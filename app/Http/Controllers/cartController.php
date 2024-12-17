@@ -95,62 +95,50 @@ class CartController extends Controller
     {
         $user = auth()->user(); // Ambil pengguna yang sedang login
         $cartItems = Cart::with('book')->where('id', $user->id)->get(); // Ambil semua item keranjang pengguna beserta relasi buku
-        $cart = session()->get('cart', []); 
-        
-        // Simpan riwayat checkout ke tabel history
-        foreach ($cartItems as $cartItem) {
-            // Cek apakah buku sudah ada di history pengguna
-            $existingHistory = History::where('fk_user_id', $user->id)
-                ->where('fk_book_id', $cartItem->book->id_buku)
-                ->first();
-    
-            // Jika belum ada, baru tambahkan ke history
-            if (!$existingHistory) {
-                History::create([
-                    'fk_user_id' => $user->id,
-                    'fk_book_id' => $cartItem->book->id_buku,
-                    'link_pdf' => $cartItem->book->link_pdf,
-                ]);
-            }
-        }
-    
-        // Hapus
-        // Hapus semua item di keranjang
-        Cart::where('id', $user->id)->delete();
-
-        // Redirect ke halaman books dengan pesan sukses
-        // return redirect()->route('books.index')->with('success', 'Checkout berhasil! Semua item telah dihapus.');
 
         // Proses setiap item di keranjang
         foreach ($cartItems as $cartItem) {
-            // Ambil data buku berdasarkan ID
-            $book = Book::find($cartItem->book_id);
+            $book = $cartItem->book; // Ambil data buku terkait
 
-            // Periksa apakah stok cukup untuk item
-            if ($cartItem->stok < $cartItem->quantity) {
-                return redirect()->route('cart.showCart')->with('error', 'Stok tidak cukup untuk buku "' . $cartItem->judul . '"');
+            // Periksa apakah stok cukup
+            if ($book->stok < $cartItem->quantity) {
+                return redirect()->route('cart.showCart')->with('error', 'Stok tidak cukup untuk buku "' . $book->judul . '"');
             }
-            
-            // Kurangi stokbuku
-            $cartItem->stok -= $cartItem->quantity;
+
+            // Kurangi stok buku
+            $book->stok -= $cartItem->quantity;
             // Tambah jumlah terjual buku
-            $cartItem->jumlah_terjual += $cartItem->quantity;
+            $book->jumlah_terjual += $cartItem->quantity;
             // Simpan perubahan pada buku
-            $cartItem   ->save();
+            $book->save();
+
+            // Cek apakah buku sudah ada di history pengguna
+            $existingHistory = History::where('fk_user_id', $user->id)
+                ->where('fk_book_id', $book->id_buku)
+                ->first();
+
+            // Jika belum ada, tambahkan ke history
+            if (!$existingHistory) {
+                History::create([
+                    'fk_user_id' => $user->id,
+                    'fk_book_id' => $book->id_buku,
+                    'link_pdf' => $book->link_pdf,
+                ]);
+            }
 
             // Hapus item dari tabel keranjang
             $cartItem->delete();
         }
 
-        // Setelah semua item di proses, redirect ke halaman books dengan pesan sukses
-        return redirect()->route('books.index')->with('success', 'Checkout berhasil! Stok dan jumlah terjual buku telah diperbarui.');
+        // Redirect ke halaman books dengan pesan sukses
+        return redirect()->route('books.index')->with('success', 'Checkout berhasil! Semua item telah diproses.');
     }
 
     public function showHistory()
     {
         // Ambil semua riwayat buku yang pernah di-checkout oleh pengguna saat ini
         $histories = History::with('book')->where('fk_user_id', Auth::id())->get();
-    
+
         // Tampilkan view dengan data history
         return view('history.index', compact('histories'));
     }

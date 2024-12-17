@@ -7,8 +7,8 @@
                 <a href="/" class="text-xl font-bold text-sky-950">HanBook Store</a>
 
                 <ul class="flex space-x-6 justify-center">
-                    <li><a href="/" class="text-sky-950 font-bold hover:text-blue-500">Best Sellers</a></li>
-                    <li><a href="/" class="text-sky-950 font-bold hover:text-blue-500">Categories</a></li>
+                    <li><a href='/sesi/login' class="text-sky-950 font-bold hover:text-blue-500">Best Sellers</a></li>
+                    <li><a href='/sesi/login' class="text-sky-950 font-bold hover:text-blue-500">Categories</a></li>
                 </ul>
 
                 <div class="flex items-center space-x-4">

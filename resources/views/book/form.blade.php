@@ -32,7 +32,7 @@
                 <textarea name="deskripsi" class="w-full p-2 border rounded mb-4">{{ $book->deskripsi ?? '' }}</textarea>
 
                 <label for="gambar">Gambar</label>
-                <input type="text" name="gambar" value="{{ $book->gambar ?? '' }}"
+                <input type="text" name="gambar" value="{{ $book->gambar ?? '' }}" required
                     class="w-full p-2 border rounded mb-4">
 
                 <label for="fk_id_kategori">Kategori</label>
@@ -45,12 +45,14 @@
                     @endforeach
                 </select>
 
+                <label for="link_pdf">Link PDF</label>
+                <input type="text" name="link_pdf" value="{{ $book->link_pdf ?? '' }}" required
+                    class="w-full p-2 border rounded mb-4">
+
                 <button type="submit" class="bg-sky-950 text-white px-4 py-2 rounded">
                     {{ isset($book) ? 'Update Buku' : 'Tambah Buku' }}
                 </button>
             </form>
         </div>
     </body>
-
 @endsection
-
