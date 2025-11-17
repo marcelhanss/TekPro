@@ -91,27 +91,26 @@
 
         <div class="container mx-auto mt-10 mb-10 grid grid-cols-4 gap-8">
             @forelse ($books as $book)
-                @if ($book->stok > 0)
-                    <div class="bg-white p-4 rounded shadow-lg">
-                        <a href="{{ route('book.detail', $book->id_buku) }}">
-                            <img src="{{ $book->gambar }}" alt="{{ $book->judul }}"
-                                class="w-full h-64 object-cover rounded">
-                            <h2 class="mt-4 text-xl font-bold text-center">{{ $book->judul }}</h2>
-                        </a>
-                        @if (Auth::user()->is_admin == 1)
-                            <div class="flex justify-center mt-2 space-x-2">
-                                <a href="{{ route('book.edit', $book->id_buku) }}"
-                                    class="bg-yellow-500 text-white px-3 py-1 rounded">Edit</a>
-                                <form action="{{ route('book.delete', $book->id_buku) }}" method="POST"
-                                    onsubmit="return confirm('Are you sure?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
-                                </form>
-                            </div>
-                        @endif
-                    </div>
-                @endif
+                {{-- @if ($book->stok > 0) --}}
+                <div class="bg-white p-4 rounded shadow-lg">
+                    <a href="{{ route('book.detail', $book->id_buku) }}">
+                        <img src="{{ $book->gambar }}" alt="{{ $book->judul }}" class="w-full h-64 object-cover rounded">
+                        <h2 class="mt-4 text-xl font-bold text-center">{{ $book->judul }}</h2>
+                    </a>
+                    @if (Auth::user()->is_admin == 1)
+                        <div class="flex justify-center mt-2 space-x-2">
+                            <a href="{{ route('book.edit', $book->id_buku) }}"
+                                class="bg-yellow-500 text-white px-3 py-1 rounded">Edit</a>
+                            <form action="{{ route('book.delete', $book->id_buku) }}" method="POST"
+                                onsubmit="return confirm('Are you sure?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+                            </form>
+                        </div>
+                    @endif
+                </div>
+                {{-- @endif --}}
 
             @empty
                 <p>No books available.</p>
